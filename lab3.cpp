@@ -246,7 +246,6 @@ int main(int argc, char** argv)
 	MPI_Irecv(0, 0, MPI_INT, 0, 0, MPI_COMM_WORLD, &request);
 
 	unsigned int nonce = 0;
-	cout << "Process " << rank << " offset is : " << nonce << endl;
 	double startTime = MPI_Wtime();
 	while (rank != 0)
 	{
