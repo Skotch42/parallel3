@@ -202,7 +202,7 @@ string SHA256::toString(uint8_t* digest) {
 	return s.str();
 }
 
-const int K = 5;
+const int K = 3;
 
 bool isValid(string hash) {
 	for (int i = 0; i < K; i++) {
