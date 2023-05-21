@@ -250,20 +250,22 @@ int main(int argc, char** argv)
 	while (rank != 0)
 	{
 		int flag = 0;
-		MPI_Test(&request, &flag, &status);
+
+		resultString = input + toString(nonce);
+		SHA256 sha;
+
+		if (isValid(sha.hash(resultString)))
+		{
+			MPI_Send(&nonce, 1, MPI_UNSIGNED, 0, 0, MPI_COMM_WORLD);
+			flag = 1;
+		}
+
+		++nonce;
+
 		if (flag)
 		{
 			break;
 		}
-
-		resultString = input + toString(nonce);
-		SHA256 sha;
-		if (isValid(sha.hash(resultString)))
-		{
-			MPI_Send(&nonce, 1, MPI_UNSIGNED, 0, 0, MPI_COMM_WORLD);
-		}
-
-		++nonce;
 	}
 
 	if (rank == 0)
