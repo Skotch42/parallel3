@@ -237,16 +237,17 @@ int main(int argc, char** argv)
 
 	int lineSize = input.size();
 	MPI_Bcast(&lineSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
-	if (rank != 0) {
+
+	if (rank != 0) 
+	{
 		input.resize(lineSize);
 	}
-	MPI_Bcast(const_cast<char*>(input.data()), lineSize, MPI_CHAR, 0, MPI_COMM_WORLD);
 
-	MPI_Request request;
-	MPI_Irecv(0, 0, MPI_INT, 0, 0, MPI_COMM_WORLD, &request);
+	MPI_Bcast(const_cast<char*>(input.data()), lineSize, MPI_CHAR, 0, MPI_COMM_WORLD);
 
 	unsigned int nonce = 0;
 	double startTime = MPI_Wtime();
+
 	while (rank != 0)
 	{
 		int flag = 0;
@@ -260,12 +261,13 @@ int main(int argc, char** argv)
 			flag = 1;
 		}
 
-		++nonce;
 
 		if (flag)
 		{
 			break;
 		}
+
+		++nonce;
 	}
 
 	if (rank == 0)
@@ -283,10 +285,12 @@ int main(int argc, char** argv)
 			if (found)
 			{
 				cout << "Operation took : " << MPI_Wtime() - startTime << "s" << endl;
+
 				for (int i = 1; i < size; ++i)
 				{
 					MPI_Send(0, 0, MPI_INT, i, 0, MPI_COMM_WORLD);
 				}
+
 				cout << "Found hash(" << input << " + " << nonce << ") = " << hash << endl;
 			}
 		}
