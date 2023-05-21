@@ -267,7 +267,7 @@ int main(int argc, char** argv)
 			break;
 		}
 
-		++nonce;
+		nonce++;
 	}
 
 	if (rank == 0)
